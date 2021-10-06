@@ -3,7 +3,6 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from "react-router-dom";
 
-
 class NavBar extends React.Component {
     state = {menuClicked:false};
 
@@ -22,7 +21,7 @@ class NavBar extends React.Component {
                     <li className="nav-links" > Friends Outing 101 </li>
                     <Link to="/listing"><li className="nav-links" > Check Restaurant Listing</li></Link>
                 </ul>
-                <button className="btn btn--primary btn--medium fas fa-user-circle"> Account </button>
+                <button className="btn btn--primary btn--medium fas fa-user-circle" onClick={this.props.Logout}> Logout </button>
             </nav>
         );
     }
