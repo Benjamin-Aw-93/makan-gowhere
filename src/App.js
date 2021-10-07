@@ -12,13 +12,13 @@ function App() {
     password:"it5007"
   };
 
-  const [user,setUser] = React.useState({name:"",email:""});
+  const [user,setUser] = React.useState({name:"", email:""});
   const [error,setError] = React.useState("");
 
   const Login = details => {
     console.log(details);
 
-    if (details.email == adminUser.email && details.password == adminUser.password) {
+    if (details.email === adminUser.email && details.password === adminUser.password) {
       console.log("Logged in");
       setUser({
         name: details.name,
@@ -32,11 +32,11 @@ function App() {
 
   return (
     <div className="App">
-      {(user.email != "") ? (
+      {(user.email !== "") ? (
         <Router>
           <div className = "app">
             <NavBar Logout={() => {
-              setUser({name: "",email: ""});
+              setUser({name: "", email: ""});
             }}/>
             <Switch>
               <Route path="/" exact component={HomePage} />
