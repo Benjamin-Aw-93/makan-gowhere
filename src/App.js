@@ -1,6 +1,7 @@
 import ListingTable from './components/ListingTable';
 import NavBar from './components/NavBar';
 import HomePage from './components/HomePage';
+import GoogleMaps from './components/GoogleMaps';
 import * as React from 'react';
 import LoginForm from "./components/loginForm";
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
@@ -41,6 +42,7 @@ function App() {
             <Switch>
               <Route path="/" exact component={HomePage} />
               <Route path="/listing" component={ListingTable} />
+              <Route path="/maps" component={GoogleMaps} />
             </ Switch>
           </div>
         </ Router>
