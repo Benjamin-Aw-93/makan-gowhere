@@ -58,10 +58,10 @@ for (let i = 0; i < 14; i++){
         image: faker.image.image(),
         name: faker.name.findName(),
         description: faker.random.words(),
-        avgdist: String(faker.random.number({
+        avgdist: String(faker.datatype.number({
           'min': 1,
           'max': 5})).concat(' km') ,
-        rating: faker.random.number({
+        rating: faker.datatype.number({
           'min': 1,
           'max': 5}),
     }

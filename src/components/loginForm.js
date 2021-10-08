@@ -1,7 +1,22 @@
 import React, {useState} from "react";
+import Grid from '@mui/material/Grid';
+import { Paper, Avatar, TextField, Button } from "@material-ui/core";
+import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
+import { styled } from '@mui/material/styles';
+
+const StyledAvatar = styled(Avatar)(({ theme }) => ({
+  backgroundColor: theme.palette.primary.main,
+}));
+
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  padding: 20,
+  height: '70vh',
+  width: 280,
+  margin: '20px auto',
+}));
 
 function LoginForm({Login, error}) {
-
+    
     const [details,setDetails] = useState({name:"", email:"", password:""});
 
     const submitHandler = e => {
@@ -10,25 +25,26 @@ function LoginForm({Login, error}) {
     }
 
     return (
-        <form onSubmit={submitHandler}>
-          <div className="form-inner">
-            <h2>Login</h2>
-            {(error != "") ? <div className="error">{error}</div> : ""}
-            <div className="form-group">
-              <label htmlFor="name">Name:</label>
-              <input type="text" name="name" id="name" onChange={e=>setDetails({...details, name:e.target.value})} value={details.name} />
-            </div>
-            <div className="form-group">
-              <label htmlFor="email">Email:</label>
-              <input type="email" name="email" id="email" onChange={e=>setDetails({...details, email:e.target.value})} value={details.email}/>
-            </div>
-            <div className="form-group">
-              <label htmlFor="password">Password:</label>
-              <input type="password" name="password" id="password" onChange={e=>setDetails({...details, password:e.target.value})} value={details.password}/>
-            </div>
-            <input type="submit" value="LOGIN" />
-          </div>
-        </form>
+      <Grid>
+        <StyledPaper elevation = {10}>
+          <Grid align = 'center'>
+            <StyledAvatar>
+              <PersonOutlineOutlinedIcon/>
+            </StyledAvatar>
+            <h2> Login </h2>
+            {(error !== "") ? <div className="error">{error}</div> : ""}
+          </Grid>
+          <Grid>
+            <TextField label = 'Name' placeholder = "Enter name" type = "text" onChange={e=>setDetails({...details, name:e.target.value})} value={details.name} fullWidth required/>
+            <TextField label = 'Email' placeholder = "Enter username" type = "email" onChange={e=>setDetails({...details, email:e.target.value})} value={details.email} fullWidth required/>
+            <TextField label = 'Password' placeholder = "Enter password" type = "password" onChange={e=>setDetails({...details, password:e.target.value})} value={details.password} fullWidth required/>
+          </Grid>
+          <Grid sx = {{ mt: 2}}>
+            <Button type = 'submit' color = 'primary' variant = 'contained' onClick={submitHandler} fullWidth>Sign In</Button>
+          </Grid>
+        </StyledPaper>
+      </Grid>
+
     );
 };
 
