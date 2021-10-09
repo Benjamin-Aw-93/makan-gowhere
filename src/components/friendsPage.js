@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const defaultFormTemplate = { userName:"", cuisine:"", location:"" };
 const cuisineList = [
     {
         value:1,
@@ -76,7 +75,7 @@ function FriendsPage() {
     }
 
     const handleAddFields = () => {
-        setInputFields([...inputFields, defaultFormTemplate]);
+        setInputFields([...inputFields, { userName:"", cuisine:"", location:"" }]);
     };
 
     const handleRemoveFields = (index) => {
