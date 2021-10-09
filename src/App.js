@@ -5,6 +5,7 @@ import GoogleMaps from './components/GoogleMaps';
 import * as React from 'react';
 import LoginForm from "./components/loginForm";
 import FriendsPage from "./components/friendsPage";
+import SettingsPage from "./components/Settings";
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
               <Route path="/friends" component={FriendsPage} />
               <Route path="/listing" component={ListingTable} />
               <Route path="/maps" component={GoogleMaps} />
+              <Route path="/settings" component={SettingsPage} />
             </ Switch>
           </div>
         </ Router>
