@@ -1,6 +1,6 @@
 # Makan gowhere
 
-This project is created to satify the requirements of IT5007.
+This project is created to satisfy the requirements of IT5007.
 
 Exisiting problem statement: 
 As a group, it is often that nobody wants to speak up and make the final decision on behalf of everyone, simply because there are so many factors to consider - distance from where everyone is coming from, the mental budget that everyone has and even taste preferences. Thus, we are proposing a platform which takes all these factors into consideration and removes the need for users to decide on where to eat. 
