@@ -3,13 +3,14 @@ import NavBar from './components/NavBar';
 import HomePage from './components/HomePage';
 import * as React from 'react';
 import LoginForm from "./components/loginForm";
+import FriendsPage from "./components/friendsPage";
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 function App() {
 
   const adminUser = {
-    email:"test@gmail.com",
-    password:"it5007"
+    email:"a",
+    password:"a"
   };
 
   const [user,setUser] = React.useState({name:"", email:""});
@@ -40,6 +41,7 @@ function App() {
             }}/>
             <Switch>
               <Route path="/" exact component={HomePage} />
+              <Route path="/friends" component={FriendsPage} />
               <Route path="/listing" component={ListingTable} />
             </ Switch>
           </div>
