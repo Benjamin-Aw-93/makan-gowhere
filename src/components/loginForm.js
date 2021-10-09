@@ -3,6 +3,7 @@ import Grid from '@mui/material/Grid';
 import { Paper, Avatar, TextField, Button } from "@material-ui/core";
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import { styled } from '@mui/material/styles';
+import Alert from '@mui/material/Alert';
 
 const StyledAvatar = styled(Avatar)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
@@ -32,7 +33,7 @@ function LoginForm({Login, error}) {
               <PersonOutlineOutlinedIcon/>
             </StyledAvatar>
             <h2> Login </h2>
-            {(error !== "") ? <div className="error">{error}</div> : ""}
+            {(error !== "") ? <Alert severity="error" color = "error">{error}</Alert> : ""}
           </Grid>
           <Grid>
             <TextField label = 'Name' placeholder = "Enter name" type = "text" onChange={e=>setDetails({...details, name:e.target.value})} value={details.name} fullWidth required/>

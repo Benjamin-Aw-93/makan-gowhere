@@ -1,12 +1,11 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import Select from "react-select";
 import Container from "@material-ui/core/Container";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import RemoveIcon from "@material-ui/icons/Remove";
-import AddIcon from "@material-ui/icons/Add";
-import Icon from "@material-ui/core/Icon";
+
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -79,7 +78,7 @@ function FriendsPage() {
     };
 
     const handleRemoveFields = (index) => {
-        const values = [... inputFields];
+        const values = [...inputFields];
         values.splice(index, 1);
         setInputFields(values);
     };

@@ -13,12 +13,14 @@ class NavBar extends React.Component {
     render() {
         return (
             <nav className="navBarItems">
-                <Link to="/"><h1 className="navbar-logo" >Makan Go-Where <i className="fa-solid fa-react"></i></h1></Link>
+                <Link to="/"><h1 className="navbar-logo" >Makan Go-Where<i className="fa-solid fa-react"></i></h1></Link>
                 <div className='menu-icon' onClick={this.handleClick}>
                     <i className={this.state.menuClicked ? 'fas fa-times' : 'fas fa-bars'}></i>
                 </div>
                 <ul className={this.state.menuClicked ? 'nav-menu active' : 'nav-menu'}>
-                    <Link to="/friends"><li className="nav-links" > Friends Outing 101 </li></Link>
+
+                    <li className="nav-links" > Friends Outing 101 </li>
+                    <Link to="/maps"><li className="nav-links" > Maps </li></Link>
                     <Link to="/listing"><li className="nav-links" > Check Restaurant Listing</li></Link>
                 </ul>
                 <button className="btn btn--primary btn--medium fas fa-user-circle" onClick={this.props.Logout}> Logout </button>
