@@ -3,7 +3,7 @@ import {
     GoogleMap,
     useLoadScript,
     Marker,
-    InfoWindow,
+    //InfoWindow,
     Circle,
 } from '@react-google-maps/api';
 
@@ -30,10 +30,20 @@ const calculatedCenter = {
     lng: 103.866731082,
 }
 
+const circleOptions = {
+    strokeColor: '#fa314a',
+    strokeOpacity: 0.8,
+    fillColor: '#fa314a',
+    fillOpacity: 0.1,
+    visible: true,
+    radius: 500,
+  }
+
 const options = {
     disableDefaultUI: true,
     zoomControl: true,
 }
+
 
 function GoogleMaps(){
 
@@ -55,18 +65,19 @@ function GoogleMaps(){
             {friendMarkers.map((marker) => (
                 <Marker 
                 key = {marker.id}
+                animation = {window.google.maps.Animation.BOUNCE}
                 position = {{lat: marker.lat, lng: marker.lng}}
                 icon = {{
                     url: "https://img.icons8.com/ios-glyphs/60/fa314a/arms-up.png",
                     scaledSize: new window.google.maps.Size(60,60),
                     origin: new window.google.maps.Point(0,0),
-                    anchor: new window.google.maps.Point(15, 15),
+                    anchor: new window.google.maps.Point(30, 30),
                 }}
                 />
             ))}
             <Circle
                 center = {calculatedCenter}
-                radius = {500}
+                options = {circleOptions}
                 />
         </GoogleMap>
     )

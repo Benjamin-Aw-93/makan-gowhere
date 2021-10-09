@@ -33,7 +33,7 @@ const StyledTypographyName = styled(Typography)(({ theme }) => ({
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.primary.dark,
+    backgroundColor: theme.palette.primary.main,
     color: theme.palette.common.white,
     fontWeight: 'bold',
   },
@@ -147,69 +147,71 @@ function ListingTable(){
   };
 
     return (
-        <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
+        <Box pt = {3}>
+          <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell >Restaurant</StyledTableCell>
+                <StyledTableCell >Description</StyledTableCell>
+                <StyledTableCell >Average Distance</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {(rowsPerPage > 0
+              ? LISTING.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              : LISTING
+                ).map((row) => (
+                <StyledTableRow 
+                  key = {row.name}
+                > 
+                  <StyledTableCell >
+                    <Grid container>
+                      <Grid item lg = {2}>
+                        <Image src={row.image}/>
+                      </Grid>
+                      <Grid lg = {1}> </Grid>
+                      <Grid item lg = {9}>
+                        <StyledTypographyName>{row.name}</StyledTypographyName>
+                        <Rating name="read-only" value={row.rating} readOnly />
+                      </Grid>
+                    </Grid>
+                  </StyledTableCell>
+                  <StyledTableCell >{row.description}</StyledTableCell>
+                  <StyledTableCell >{row.avgdist}</StyledTableCell>
+                </StyledTableRow >
+              ))}
+  
+              {emptyRows > 0 && (
+              <TableRow style={{ height: 53 * emptyRows }}>
+                <TableCell colSpan={6} />
+              </TableRow>
+            )}
+  
+            </TableBody>
+            <TableFooter>
             <TableRow>
-              <StyledTableCell >Restaurant</StyledTableCell>
-              <StyledTableCell >Description</StyledTableCell>
-              <StyledTableCell >Average Distance</StyledTableCell>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                colSpan={3}
+                count={LISTING.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                SelectProps={{
+                  inputProps: {
+                    'aria-label': 'rows per page',
+                  },
+                  native: true,
+                }}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                ActionsComponent={TablePaginationActions}
+              />
             </TableRow>
-          </TableHead>
-          <TableBody>
-            {(rowsPerPage > 0
-            ? LISTING.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            : LISTING
-              ).map((row) => (
-              <StyledTableRow 
-                key = {row.name}
-              > 
-                <StyledTableCell >
-                  <Grid container>
-                    <Grid item lg = {2}>
-                      <Image src={row.image}/>
-                    </Grid>
-                    <Grid lg = {1}> </Grid>
-                    <Grid item lg = {9}>
-                      <StyledTypographyName>{row.name}</StyledTypographyName>
-                      <Rating name="read-only" value={row.rating} readOnly />
-                    </Grid>
-                  </Grid>
-                </StyledTableCell>
-                <StyledTableCell >{row.description}</StyledTableCell>
-                <StyledTableCell >{row.avgdist}</StyledTableCell>
-              </StyledTableRow >
-            ))}
-
-            {emptyRows > 0 && (
-            <TableRow style={{ height: 53 * emptyRows }}>
-              <TableCell colSpan={6} />
-            </TableRow>
-          )}
-
-          </TableBody>
-          <TableFooter>
-          <TableRow>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-              colSpan={3}
-              count={LISTING.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              SelectProps={{
-                inputProps: {
-                  'aria-label': 'rows per page',
-                },
-                native: true,
-              }}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              ActionsComponent={TablePaginationActions}
-            />
-          </TableRow>
-        </TableFooter>
-        </Table>
-      </TableContainer>
+          </TableFooter>
+          </Table>
+        </TableContainer>
+        </Box>
     );
 }
 
