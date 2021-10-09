@@ -13,7 +13,7 @@ The application aims to:
 
 3. Make meet-ups among friends a hassle free experience, while abstracting the need to make difficult decisions when selecting food choices
 
-Summary of Goal:
+Summary of Goals:
 
 - Create a readable frontend
 - Map out states to make sure navigation between pages work okay
@@ -24,5 +24,7 @@ Summary of Goal:
 An expanded scope can be found in our project documentation.  
 
 Done by: 
+
 Sylvester Yeo 
+
 Benjamin Aw
