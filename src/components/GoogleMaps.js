@@ -7,12 +7,6 @@ import {
     Circle,
 } from '@react-google-maps/api';
 
-const friendMarkers = [
-    {id: 1, lat: 1.3600535930000293, lng: 103.86048691689761 },
-    {id: 2, lat: 1.365167209027227, lng: 103.87014870107947 },
-    {id: 3, lat: 1.3528036032709148, lng: 103.86955762722366 },
-]
-
 const libraries = ["places"];
 
 const mapContainerStyle = {
@@ -20,15 +14,6 @@ const mapContainerStyle = {
     height: '100vh',
 };
 
-const center = {
-    lat: 1.35934146843,
-    lng: 103.866731082,
-}
-
-const calculatedCenter = {
-    lat: 1.35934146843,
-    lng: 103.866731082,
-}
 
 const circleOptions = {
     strokeColor: '#fa314a',
@@ -45,7 +30,7 @@ const options = {
 }
 
 
-function GoogleMaps(){
+function GoogleMaps(props){
 
     const {isLoaded, loadError} = useLoadScript({
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
@@ -60,9 +45,9 @@ function GoogleMaps(){
         <GoogleMap 
         mapContainerStyle = {mapContainerStyle} 
         zoom = {16} 
-        center = {center}
+        center = {props.calculatedCenter}
         options = {options}>
-            {friendMarkers.map((marker) => (
+            {props.userList.map((marker) => (
                 <Marker 
                 key = {marker.id}
                 animation = {window.google.maps.Animation.BOUNCE}
@@ -76,7 +61,7 @@ function GoogleMaps(){
                 />
             ))}
             <Circle
-                center = {calculatedCenter}
+                center = {props.calculatedCenter}
                 options = {circleOptions}
                 />
         </GoogleMap>

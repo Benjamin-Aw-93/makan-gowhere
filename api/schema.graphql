@@ -1,0 +1,29 @@
+type User {
+_id: ID!
+name: String!
+email: String!
+password: String!
+preferences: [String]
+lat: Float!
+lng: Float!
+}
+
+input UserInputs {
+    name: String!
+    email: String!
+    password: String!
+}
+
+type Query {
+    about: String!
+    userList: [User!]!
+}
+
+type Mutation {
+    setAboutMessage(message: String!): String
+    userCreate(user: UserInputs!): User!
+    userDel(id: String!): User! 
+    userAddPreference(id: String!, preference: String!): User!
+    userEditLat(id: String!, lat: Float!): User!
+    userEditLng(id: String!, lat: Float!): User!
+}
