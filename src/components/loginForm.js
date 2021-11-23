@@ -26,13 +26,14 @@ function LoginForm({Login, error}) {
     }
 
     return (
-      <Grid>
+      <Grid >
         <StyledPaper elevation = {10}>
           <Grid align = 'center'>
             <StyledAvatar>
               <PersonOutlineOutlinedIcon/>
             </StyledAvatar>
-            <h2> Login </h2>
+            <h2> Welcome to Makan GoWhere! </h2>
+            <h3> Login </h3>
             {(error !== "") ? <Alert severity="error" color = "error">{error}</Alert> : ""}
           </Grid>
           <Grid>

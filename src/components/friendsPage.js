@@ -5,8 +5,8 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import RemoveIcon from "@material-ui/icons/Remove";
-
-
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import {Link} from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -57,58 +57,78 @@ const customStyles = {
     }
 };
 
-function FriendsPage() {
+
+function FriendsPage({friends, setFriends, updateCoordinates}) {
+
+    const [submitted, setSubmitted] = React.useState(false);
+
     const classes = useStyles();
 
-    const [inputFields, setInputFields] = useState([{ userName:"Admin User", cuisine:"", location:"" }]);
-
     const handleChangeInput = (index, event) => {
-        const values = [...inputFields];
+        const values = [...friends];
         values[index][event.target.name] = event.target.value;
-        setInputFields(values);
+        setFriends(values);
+        setSubmitted(false);
+    };
+
+    const handleNumericChangeInput = (index, event) => {
+        const values = [...friends];
+        values[index][event.target.name] = parseFloat(event.target.value);
+        setFriends(values);
+        setSubmitted(false);
     };
 
     const handleSubmit = (e) => {
         e.preventDefault(); //prevent page from reloading
-        console.log(inputFields);
+        console.log(friends);
     }
 
     const handleAddFields = () => {
-        setInputFields([...inputFields, { userName:"", cuisine:"", location:"" }]);
+        setFriends([...friends, { name:"", cuisine:"", lat:"", lng: ""}]);
+        setSubmitted(false);
     };
 
-    const handleRemoveFields = (index) => {
-        const values = [...inputFields];
+    const handleRemoveFields = (event, index) => {
+        const values = [...friends];
         values.splice(index, 1);
-        setInputFields(values);
+        setFriends(values);
+        setSubmitted(false);
     };
 
     const handleSelectCuisine = (event,index) => {
-        const values = [...inputFields];
+        const values = [...friends];
         let cuisineSelected = (Array.isArray(event)?event.map(x=>x.label):[]);
         values[index]["cuisine"] = cuisineSelected;
-        setInputFields(values);
+        setFriends(values);
+        setSubmitted(false);
     };
 
     return (
         <Container style={{"margin": "auto","width": "50%","padding":"10px"}}>
             <h1> Let the fun begin! </h1>
             <form className={classes.root} onSubmit={handleSubmit}>
-                { inputFields.map((inputField,index) => (
+                { friends.map((inputField,index) => (
                     <div key={index}>
                         <TextField 
-                            name='userName'
+                            name='name'
                             label="Your Name"
                             variant="filled"
-                            value={inputField.userName}
+                            value={inputField.name}
                             onChange={ event => handleChangeInput(index,event) }
                             />
                         <TextField 
-                            name = 'location'
-                            label = "Location"
+                            name = 'lat'
+                            label = "Lat"
+                            variant="filled" 
+                            value={inputField.lat}
+                            onChange={ event => handleNumericChangeInput(index,event) }
+                        />
+                        <TextField 
+                            name = 'lng'
+                            label = "Lng"
                             variant="filled"
-                            value={inputField.location}
-                            onChange={ event => handleChangeInput(index,event) }
+                            value={inputField.lng}
+                            onChange={ event => handleNumericChangeInput(index,event) }
                         />
                         <IconButton onClick={event => handleRemoveFields(event,index)}>
                             <RemoveIcon />
@@ -125,12 +145,30 @@ function FriendsPage() {
                     </div>
                 )) }
                 <IconButton onClick={handleAddFields}> Add Friends</IconButton>
+                {submitted ? (
+                    <Button 
+                        className={classes.button}
+                        variant="contained" 
+                        buttonStyle="btn--outline"
+                        type="submit"
+                    > <CheckCircleIcon color = "success"/> Friend listing confirmed! </Button>
+                ) : (
+                    <Button 
+                        className={classes.button}
+                        variant="contained" 
+                        color="primary" 
+                        type="submit"
+                        onClick={() => { setFriends(friends);  setSubmitted(true)}}
+                    > Confirm friends listing? </Button>
+                )}
                 <Button 
+                    component={Link}
+                    to={"/maps"}
                     className={classes.button}
                     variant="contained" 
                     color="primary" 
                     type="submit"
-                    onClick={handleSubmit}
+                    onClick={updateCoordinates}
                 >Find a place for us :) </Button>
             </form>
         </Container>

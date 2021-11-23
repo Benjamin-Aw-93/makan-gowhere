@@ -20,8 +20,7 @@ class NavBar extends React.Component {
                 <ul className={this.state.menuClicked ? 'nav-menu active' : 'nav-menu'}>
 
                     <Link to="/friends"><li className="nav-links" > Friends Outing 101 </li></Link>
-                    <Link to="/maps"><li className="nav-links" > Maps </li></Link>
-                    <Link to="/listing"><li className="nav-links" > Check Restaurant Listing </li></Link>
+                    <Link to="/maps"><li className="nav-links" > Maps + Check Restaurant Listing</li></Link>
                     <Link to="/settings"><li className="nav-links" > Settings </li></Link>
                 </ul>
                 <button className="btn btn--primary btn--medium fas fa-user-circle" onClick={this.props.Logout}> Logout </button>
