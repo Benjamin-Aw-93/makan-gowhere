@@ -1,10 +1,13 @@
+import React from 'react';
 import Button from "./Button";
 import "../css/HeroSection.css";
 import ReactPlayer from 'react-player/youtube'
 
-function HeroSection() {
+function HeroSection({user}) {
+
     return (
         <div className="hero-container">
+            <h1> Welcome {user.name}! </h1>
             <h1>Your food adventure begins here</h1>
             <p>What are you waiting for?</p>
             <ReactPlayer url='https://www.youtube.com/watch?v=lcU3pruVyUw' playing = {true} loop = {true} volume = {0.3}/>

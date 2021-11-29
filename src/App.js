@@ -1,4 +1,3 @@
-import ListingTable from './components/ListingTable';
 import NavBar from './components/NavBar';
 import HomePage from './components/HomePage';
 import GoogleMaps from './components/GoogleMaps';
@@ -52,16 +51,17 @@ function App() {
   };
 
   const [user,setUser] = React.useState({name:"", email:""});
+  const [userCoord, setUserCoord] = React.useState({lat: 0 , lng: 0});
   const [friends,setFriends] = React.useState([]);
+  const [userwithFriends, setUserWithFriends] = React.useState([]);
   const [error,setError] = React.useState("");
-  const [userList, setUserList] = React.useState([]);
   const [places, setPlaces] = React.useState([]);
+  const [cardPlaces, setCardPlaces] = React.useState([]);
   const [filteredPlaces, setFilteredPlaces] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
   const [coordinates, setCoordiantes] = React.useState({lat: 0, lng: 0});
   const [childClicked, setChildClicked] = React.useState(null);
   const [rating, setRating] = React.useState('');
-
 
   const Login = details => {
     console.log(details);
@@ -100,10 +100,41 @@ function App() {
   }, [rating]);
 
   React.useEffect(() => {
+
+    const currUser = {
+      name: user.name,
+      lat: userCoord.lat,
+      lng: userCoord.lng,
+      current: true,
+    }
+
+    setUserWithFriends([currUser, ...friends]);
+
+  }, [friends]);
+
+  React.useEffect(() => {
+    
     loadData()
+
+    navigator.geolocation.getCurrentPosition(function(position) {
+      setUserCoord({
+        lat: position.coords.latitude , 
+        lng: position.coords.longitude
+      });
+      
+      getPlacesData(position.coords.latitude, position.coords.longitude)
+      .then((data) => { 
+        setCardPlaces(data.slice(0, 5));
+    });
+
+    });
+
+    
+
   }, []);
 
   let updateListing = () => {
+    setIsLoading(true)
     getPlacesData(coordinates.lat, coordinates.lng)
       .then((data) => {
         setPlaces(data);
@@ -115,22 +146,23 @@ function App() {
 
   let updateCoordinates = () => {
 
-    console.log(friends)
+    console.log(userwithFriends)
 
-    const result = friends.reduce((a, {lat, lng}) => {
+    const result = userwithFriends.reduce((a, {lat, lng}) => {
       a.lat += lat;
       a.lng += lng;
         return a;
     }, {lat: 0, lng: 0})
 
     const calculatedCenter = {
-      lat: result.lat/friends.length,
-      lng: result.lng/friends.length,
+      lat: result.lat/userwithFriends.length,
+      lng: result.lng/userwithFriends.length,
     }
     
     setCoordiantes(calculatedCenter);
 
   }
+
 
   return (
     <div className="App">
@@ -141,7 +173,9 @@ function App() {
               setUser({name: "", email: ""});
             }}/>
             <Switch>
-              <Route path="/" exact component={HomePage} />
+              <Route path="/" exact>
+                <HomePage cardPlaces = {cardPlaces} user = {user}/>
+              </Route>
               <Route path="/friends">
                 <FriendsPage friends = {friends} setFriends = {setFriends} updateCoordinates = {updateCoordinates}/>
               </Route>
@@ -151,7 +185,7 @@ function App() {
                     <Listings childClicked = {childClicked} isLoading ={isLoading} updateListing = {updateListing} places = { filteredPlaces.length ? filteredPlaces : places } rating = {rating} setRating = {setRating}/>
                   </Grid>
                   <Grid item xs={12} md={8} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <GoogleMaps setChildClicked = {setChildClicked} places = { filteredPlaces.length ? filteredPlaces : places } friends = {friends} calculatedCenter = {coordinates}  />
+                    <GoogleMaps setChildClicked = {setChildClicked} places = { filteredPlaces.length ? filteredPlaces : places } friends = {userwithFriends} calculatedCenter = {coordinates}  />
                   </Grid>
                 </Grid>
               </Route>

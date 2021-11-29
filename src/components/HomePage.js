@@ -4,16 +4,15 @@ import Cards from './Cards';
 //import PropTypes from 'prop-types';
 import HeroSection from './HeroSection';
 
-class HomePage extends React.Component {
+function HomePage({cardPlaces, user}) {
 
-    render() {
-        return (
-            <>
-                <HeroSection />
-                <Cards />
-            </>
-        );
-    }
+    return (
+        <>
+            <HeroSection user = {user}/>
+            <Cards cardPlaces = {cardPlaces}/>
+        </>
+    );
+
 };
 
 export default HomePage;

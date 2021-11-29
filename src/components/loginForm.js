@@ -17,8 +17,8 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
 }));
 
 function LoginForm({Login, error}) {
-    
-    const [details,setDetails] = useState({name:"", email:"", password:""});
+
+  const [details,setDetails] = React.useState({name:"", email:"", password:""});
 
     const submitHandler = e => {
       e.preventDefault();

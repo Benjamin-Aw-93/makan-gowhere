@@ -31,7 +31,7 @@ const circleOptions = {
     fillColor: '#fa314a',
     fillOpacity: 0.1,
     visible: true,
-    radius: 800,
+    radius: 1500,
   }
 
 const options = {
@@ -112,7 +112,21 @@ function GoogleMaps({ setChildClicked, places, friends, calculatedCenter }){
                     </Paper>
                 </InfoWindow>) : null}
 
-            {friends?.map((marker) => (
+            {friends?.map((marker) => marker.current ? (
+                <Marker 
+                key = {marker.id}
+                animation = {window.google.maps.Animation.BOUNCE}
+                position = {{lat: marker.lat, lng: marker.lng}}
+                icon = {{
+                    url: "https://img.icons8.com/ios-glyphs/60/6c33c0/arms-up.png",
+                    scaledSize: new window.google.maps.Size(60,60),
+                    origin: new window.google.maps.Point(0,0),
+                    anchor: new window.google.maps.Point(30, 30),
+                }}
+                onClick = {() => {
+                    setSelected(marker);
+                }}
+                /> ): (
                 <Marker 
                 key = {marker.id}
                 animation = {window.google.maps.Animation.BOUNCE}
@@ -127,7 +141,8 @@ function GoogleMaps({ setChildClicked, places, friends, calculatedCenter }){
                     setSelected(marker);
                 }}
                 />
-            ))}
+                )
+            )}
 
             {selected ? (
                 <InfoWindow 
@@ -142,7 +157,7 @@ function GoogleMaps({ setChildClicked, places, friends, calculatedCenter }){
             <Circle
                 center = {calculatedCenter}
                 options = {circleOptions}
-                />
+            />
         </GoogleMap>
     )
 };

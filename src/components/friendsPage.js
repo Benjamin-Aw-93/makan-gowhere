@@ -57,7 +57,6 @@ const customStyles = {
     }
 };
 
-
 function FriendsPage({friends, setFriends, updateCoordinates}) {
 
     const [submitted, setSubmitted] = React.useState(false);
@@ -90,7 +89,7 @@ function FriendsPage({friends, setFriends, updateCoordinates}) {
 
     const handleRemoveFields = (event, index) => {
         const values = [...friends];
-        values.splice(index, 1);
+        values.splice(index-1, 1);
         setFriends(values);
         setSubmitted(false);
     };
