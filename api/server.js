@@ -5,6 +5,12 @@ const { GraphQLScalarType } = require('graphql');
 const { Kind } = require('graphql/language');
 const { MongoClient } = require('mongodb');
 
+/* 
+MongoDB set up to create a database of user's friends
+We initailly set up the database with different functionalities put in place. 
+Most of it are currently un-used by the app but can be easily intergreated with the front end if necessary. 
+Now the DB is only used for querying
+*/
 const url = 'mongodb://localhost/usertracker';
 
 let db;
@@ -30,15 +36,17 @@ function setAboutMessage(_, {message}){
   return aboutMessage = message;
 }
 
+// Get list of user 
 async function userList(){
   const users = await db.collection('users').find({}).toArray();
   return users;
 }
 
-function test_phonenumber(inputtxt){
-    const phoneno = /.*@.*.com/;
+// Checking user input email 
+function test_email(inputtxt){
+    const email = /.*@.*.com/;
   
-    return inputtxt.match(phoneno)? true : false ;
+    return inputtxt.match(email)? true : false ;
   }
   
 function userValidate(user) {
@@ -58,6 +66,8 @@ function userValidate(user) {
   }
 }
 
+
+// Creating a new user in the database
 async function userCreate(_, {user}){
   userValidate(user);
   user.created = new Date();
@@ -69,6 +79,7 @@ async function userCreate(_, {user}){
   return savedCustomer;
 }
 
+// Deleting user in the database
 async function userDel(_, {id}){
 
   const savedCustomer = await db.collection('users').findOne({ id: id });
@@ -78,6 +89,7 @@ async function userDel(_, {id}){
   return savedCustomer;
 }
 
+// Adding a users preference based on the ID
 async function userAddPreference(_, {id, preference}){
 
     const savedCustomer = await db.collection('users').findOne({ id: id });
@@ -89,6 +101,7 @@ async function userAddPreference(_, {id, preference}){
     return savedCustomer;
   }
 
+// Editing a users position (lat)
 async function userEditLat(_, {id, lat}){
 
     const savedCustomer = await db.collection('users').findOne({ id: id });
@@ -98,6 +111,7 @@ async function userEditLat(_, {id, lat}){
     return savedCustomer;
   }
 
+// Editing a users position (lng)
 async function userEditLng(_, {id, long}){
 
     const savedCustomer = await db.collection('users').findOne({ id: id });

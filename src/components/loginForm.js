@@ -1,9 +1,14 @@
-import React, {useState} from "react";
+import React from "react";
 import Grid from '@mui/material/Grid';
 import { Paper, Avatar, TextField, Button } from "@material-ui/core";
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import { styled } from '@mui/material/styles';
 import Alert from '@mui/material/Alert';
+
+/*
+Component that the user will first see, even before the homepage.
+Acts as a simple form of authentication. 
+*/
 
 const StyledAvatar = styled(Avatar)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
@@ -24,6 +29,8 @@ function LoginForm({Login, error}) {
       e.preventDefault();
       Login(details);
     }
+    
+    // The goal is to create a form to take in all the user's details. If it does not match, we throw out an error, which will infom the user than a wrong password has been entered. 
 
     return (
       <Grid >
@@ -34,7 +41,7 @@ function LoginForm({Login, error}) {
             </StyledAvatar>
             <h2> Welcome to Makan GoWhere! </h2>
             <h3> Login </h3>
-            {(error !== "") ? <Alert severity="error" color = "error">{error}</Alert> : ""}
+            {(error !== "") ? <Alert severity="error" color = "error">{error}</Alert> : ""} 
           </Grid>
           <Grid>
             <TextField label = 'Name' placeholder = "Enter name" type = "text" onChange={e=>setDetails({...details, name:e.target.value})} value={details.name} fullWidth required/>

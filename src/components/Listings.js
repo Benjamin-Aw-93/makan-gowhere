@@ -4,13 +4,17 @@ import PlaceDetails from './PlaceDetails';
 import useStyles from '../css/Liststyles.js';
 import Button from '@mui/material/Button';
 
+/*
+Component that display the list of restaurants in that centra area. 
+*/
+
 const Listings = ({childClicked, updateListing, places, isLoading, rating, setRating}) => {
+    
     const classes = useStyles();
     const [type, setType] = useState('restaurants');
+    const [elRefs, setElRefs] = useState([]); //This is a hook to update 
 
-    const [elRefs, setElRefs] = useState([]);
-
-    useEffect(() => {
+    useEffect(() => { //setting references for as many places as we have in the array
 
         setElRefs((refs) => Array(places.length).fill().map((_, i) => refs[i] || createRef()));
       
@@ -40,16 +44,16 @@ const Listings = ({childClicked, updateListing, places, isLoading, rating, setRa
                 Search
             </Button>
             </Grid>
-            {isLoading ? (
+            {isLoading ? ( // To load the loading circle
                 <div className={classes.loading}>
-                <CircularProgress size="5rem" />
+                <CircularProgress size="5rem" /> 
               </div>
             ) : (
                 <>
             <Grid container spacing = {3} className = {classes.list}>
                 {places?.map((place, i ) => (
                     <Grid ref={elRefs[i]} item key = {i} xs = {12}>
-                        <PlaceDetails 
+                        <PlaceDetails // Each restaurant is enclosed in a PlaceDetails, which is a card containing all details of the palce. 
                             selected={Number(childClicked) === i} 
                             refProp={elRefs[i]} 
                             place={place} 

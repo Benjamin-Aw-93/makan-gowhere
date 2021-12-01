@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Select from "react-select";
 import Container from "@material-ui/core/Container";
 import TextField from "@material-ui/core/TextField";
@@ -8,6 +8,10 @@ import RemoveIcon from "@material-ui/icons/Remove";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import {Link} from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
+
+/*
+Making sure consistent theme in the component
+*/
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -59,10 +63,14 @@ const customStyles = {
 
 function FriendsPage({friends, setFriends, updateCoordinates}) {
 
-    const [submitted, setSubmitted] = React.useState(false);
+    const [submitted, setSubmitted] = React.useState(false); // This controls the display of the button. When the user clicks confirm, changes to true. If any of the friends entries change, setSubmitted will be change back to false.
 
     const classes = useStyles();
 
+    /*
+    Functions to track changes within the form, when the list of friends is finalised, we use setFriends to update the list of friends. 
+    */
+    
     const handleChangeInput = (index, event) => {
         const values = [...friends];
         values[index][event.target.name] = event.target.value;
@@ -144,7 +152,7 @@ function FriendsPage({friends, setFriends, updateCoordinates}) {
                     </div>
                 )) }
                 <IconButton onClick={handleAddFields}> Add Friends</IconButton>
-                {submitted ? (
+                {submitted ? ( //Button changes when clicked on submit
                     <Button 
                         className={classes.button}
                         variant="contained" 
@@ -167,7 +175,7 @@ function FriendsPage({friends, setFriends, updateCoordinates}) {
                     variant="contained" 
                     color="primary" 
                     type="submit"
-                    onClick={updateCoordinates}
+                    onClick={updateCoordinates} //This starts the caluclation of the midpoint to be displayed on Google Maps.
                 >Find a place for us :) </Button>
             </form>
         </Container>

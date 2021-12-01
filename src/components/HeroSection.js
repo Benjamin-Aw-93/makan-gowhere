@@ -3,6 +3,14 @@ import Button from "./Button";
 import "../css/HeroSection.css";
 import ReactPlayer from 'react-player/youtube'
 
+/*
+Homepage componenet: 
+This serves as the introductory page for our users
+We have a welcome banner, along with an introductory video. 
+We also created buttons which would lead the user to the next page (friends page)
+*/
+
+
 function HeroSection({user}) {
 
     return (

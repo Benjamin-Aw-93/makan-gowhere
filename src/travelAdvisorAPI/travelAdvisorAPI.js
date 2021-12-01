@@ -1,7 +1,11 @@
 import axios from 'axios';
 
-const URL = 'https://travel-advisor.p.rapidapi.com/restaurants/list-by-latlng'
+/*
+Component that helps us to query food places within a designated area. 
+Can be modified to take in additonal inputs to query other things other than restaurants.  
+*/
 
+const URL = 'https://travel-advisor.p.rapidapi.com/restaurants/list-by-latlng'
 
 
 const getPlacesData = async (lat, lng) => {

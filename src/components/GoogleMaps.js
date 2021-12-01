@@ -39,7 +39,7 @@ const options = {
     zoomControl: true,
 }
 
-function distance(lat1, lon1, lat2, lon2) {
+function distance(lat1, lon1, lat2, lon2) { // Calculating the distance between two places
     var p = 0.017453292519943295;    
     var c = Math.cos;
     var a = 0.5 - c((lat2 - lat1) * p)/2 + 
@@ -51,12 +51,15 @@ function distance(lat1, lon1, lat2, lon2) {
     return Math.round(num * 100) / 100 
   }
 
+/*
+Component that display the restaurants and people on the map.
+*/
 
 function GoogleMaps({ setChildClicked, places, friends, calculatedCenter }){
 
     const [map, setMap] = React.useState(null)
-    const [selected, setSelected] = React.useState(null);
-    const [placeselected, setPlacesSelected] = React.useState(null);
+    const [selected, setSelected] = React.useState(null); // Helps us keep track of who is being clicked
+    const [placeselected, setPlacesSelected] = React.useState(null); // Helps us keep track of which restaurant is being clicked
 
     const onLoad = React.useCallback((map) => {
         setMap(map);
@@ -80,7 +83,7 @@ function GoogleMaps({ setChildClicked, places, friends, calculatedCenter }){
         onLoad = {onLoad}
         >   
             
-            {places?.map((place, i) => (
+            {places?.map((place, i) => ( // Mapping out all the food places on the map
                 <Marker 
                 key = {i}
                 position = {{lat: Number(place.latitude), lng: Number(place.longitude)}}
@@ -91,7 +94,7 @@ function GoogleMaps({ setChildClicked, places, friends, calculatedCenter }){
                 />
             ))}
             
-            {placeselected ? (
+            {placeselected ? ( // If a place is selected, we diplay the information in the form of a card
                 <InfoWindow 
                     position = {{ lat: Number(placeselected.latitude), lng: Number(placeselected.longitude) }} 
                     onCloseClick = {() => {setPlacesSelected(null);}}>
@@ -111,7 +114,7 @@ function GoogleMaps({ setChildClicked, places, friends, calculatedCenter }){
                     </Paper>
                 </InfoWindow>) : null}
 
-            {friends?.map((marker) => marker.current ? (
+            {friends?.map((marker) => marker.current ? ( // Mapping out all the friends/user places on the map, 2 icon of differing color, based on who is the user and who is the friend
                 <Marker 
                 key = {marker.id}
                 animation = {window.google.maps.Animation.BOUNCE}
@@ -143,7 +146,7 @@ function GoogleMaps({ setChildClicked, places, friends, calculatedCenter }){
                 )
             )}
 
-            {selected ? (
+            {selected ? ( // If a friend/user is selected, we diplay the information in the form of a Infowindow, diplaying the name and the distance from the food places. 
                 <InfoWindow 
                     position = {{ lat: selected.lat, lng: selected.lng }} 
                     onCloseClick = {() => {setSelected(null);}}>
