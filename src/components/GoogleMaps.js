@@ -57,7 +57,6 @@ function GoogleMaps({ setChildClicked, places, friends, calculatedCenter }){
     const [map, setMap] = React.useState(null)
     const [selected, setSelected] = React.useState(null);
     const [placeselected, setPlacesSelected] = React.useState(null);
-    
 
     const onLoad = React.useCallback((map) => {
         setMap(map);

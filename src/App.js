@@ -119,13 +119,22 @@ function App() {
     navigator.geolocation.getCurrentPosition(function(position) {
       setUserCoord({
         lat: position.coords.latitude , 
-        lng: position.coords.longitude
+        lng: position.coords.longitude  
       });
       
       getPlacesData(position.coords.latitude, position.coords.longitude)
       .then((data) => { 
         setCardPlaces(data.slice(0, 5));
     });
+
+    const currUser = {
+      name: user.name,
+      lat: userCoord.lat,
+      lng: userCoord.lng,
+      current: true,
+    }
+
+    setUserWithFriends([currUser]);
 
     });
 
