@@ -15,6 +15,7 @@ const resolvers = {
   Query:{
     about: () => aboutMessage,
     userList,
+    findSpecificUser
   },
   Mutation:{
     setAboutMessage,
@@ -23,6 +24,9 @@ const resolvers = {
     userAddPreference,
     userEditLat,
     userEditLng,
+    updateCustomerName,
+    updateCustomerEmail,
+    updateCustomerPW
   }
 };
 
@@ -34,6 +38,44 @@ async function userList(){
   const users = await db.collection('users').find({}).toArray();
   return users;
 }
+
+async function findSpecificUser(_, {specificName}){
+  const user = await db.collection('users').findOne({ name: specificName });
+  return user;
+}
+
+async function updateCustomerName(_, {infoToUpdate, specificName}){
+    const results = await db.collection('users').update(
+      {name: specificName},
+      {
+        $set: {name:infoToUpdate}
+      }
+      );
+    const newUser = await db.collection('users').findOne({ name: infoToUpdate });
+    return newUser;
+  }
+
+  async function updateCustomerPW(_, {infoToUpdate, specificName}){
+    const results = await db.collection('users').update(
+      {name: specificName},
+      {
+        $set: {password:infoToUpdate}
+      }
+      );
+    const newUser = await db.collection('users').findOne({ name: specificName });
+    return newUser;
+  }
+
+  async function updateCustomerEmail(_, {infoToUpdate, specificName}){
+    const results = await db.collection('users').update(
+      {name: specificName},
+      {
+        $set: {email:infoToUpdate}
+      }
+      );
+    const newUser = await db.collection('users').findOne({ name: specificName });
+    return newUser;
+  }
 
 function test_phonenumber(inputtxt){
     const phoneno = /.*@.*.com/;

@@ -198,7 +198,10 @@ function App() {
                   </Grid>
                 </Grid>
               </Route>
-              <Route path="/settings" component={SettingsPage} />
+              <Route path="/settings">
+                <SettingsPage user={user} />
+              </Route>
+
             </ Switch>
           </div>
         </ Router>

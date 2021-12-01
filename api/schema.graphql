@@ -1,30 +1,40 @@
 type User {
-_id: ID!
-name: String!
-email: String!
-password: String!
-preferences: [String]
-cusine: String!
-lat: Float!
-lng: Float!
+  _id: ID!
+  name: String!
+  email: String!
+  password: String!
+  preferences: [String]
+  cusine: String!
+  lat: Float!
+  lng: Float!
 }
 
 input UserInputs {
-    name: String!
-    email: String!
-    password: String!
+  name: String!
+  email: String!
+  password: String!
+}
+
+type userReturn {
+  name: String!
+  email: String!
+  password: String!
 }
 
 type Query {
-    about: String!
-    userList: [User!]!
+  about: String!
+  userList: [User!]!
+  findSpecificUser(specificName: String!): userReturn
 }
 
 type Mutation {
-    setAboutMessage(message: String!): String
-    userCreate(user: UserInputs!): User!
-    userDel(id: String!): User! 
-    userAddPreference(id: String!, preference: String!): User!
-    userEditLat(id: String!, lat: Float!): User!
-    userEditLng(id: String!, lat: Float!): User!
+  setAboutMessage(message: String!): String
+  userCreate(user: UserInputs!): User!
+  userDel(id: String!): User!
+  userAddPreference(id: String!, preference: String!): User!
+  userEditLat(id: String!, lat: Float!): User!
+  userEditLng(id: String!, lat: Float!): User!
+  updateCustomerName(infoToUpdate: String!, specificName: String!): userReturn!
+  updateCustomerPW(infoToUpdate: String!, specificName: String!): userReturn!
+  updateCustomerEmail(infoToUpdate: String!, specificName: String!): userReturn!
 }
