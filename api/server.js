@@ -21,6 +21,7 @@ const resolvers = {
   Query:{
     about: () => aboutMessage,
     userList,
+    getMainUser,
   },
   Mutation:{
     setAboutMessage,
@@ -38,8 +39,14 @@ function setAboutMessage(_, {message}){
 
 // Get list of user 
 async function userList(){
-  const users = await db.collection('users').find({}).toArray();
+  const users = await db.collection('users').find({ current: false }).toArray();
   return users;
+}
+
+// Get main user
+async function getMainUser(){
+  const user = await db.collection('users').findOne({ current: true });
+  return user;
 }
 
 // Checking user input email 
@@ -65,6 +72,7 @@ function userValidate(user) {
     throw new UserInputError('Invalid input(s)', { errors });
   }
 }
+
 
 
 // Creating a new user in the database

@@ -55,11 +55,6 @@ Start of our application
 */
 function App() {
 
-  const adminUser = { //Simple username and password, we did not use any form of online authetecation for this project
-    email:"a",
-    password:"a"
-  };
-
   /*
   All state hookes used in this project
   */
@@ -76,7 +71,8 @@ function App() {
   const [coordinates, setCoordiantes] = React.useState({lat: 0, lng: 0}); // Central location coordinates
   const [childClicked, setChildClicked] = React.useState(null); // Indicator for when a node is clicked, used to scroll card
   const [rating, setRating] = React.useState(''); // Used for filtering places by ratings 
-  
+  const [loggedin, setLoggedIn] = React.useState(false); 
+
   /*
   Function used to check if log in details are correct or not
   */
@@ -84,12 +80,9 @@ function App() {
   const Login = details => {
     console.log(details);
 
-    if (details.email === adminUser.email && details.password === adminUser.password) {
+    if (details.email === user.email && details.password === user.password) {
       console.log("Logged in");
-      setUser({
-        name: details.name,
-        email: details.email
-      });
+      setLoggedIn(true);
     } else {
       console.log("Details do not match");
       setError("Details do not match");
@@ -109,6 +102,19 @@ function App() {
   
     if (data) {
       setFriends(data.userList);
+      }
+
+    };
+
+  const loadMainUser = async () => {
+    const query = `query {
+      getMainUser{_id, name, email, password, current}
+    }`;
+
+    const data = await graphQLFetch(query);
+  
+    if (data) {
+      setUser(data.getMainUser);
       }
 
     };
@@ -134,7 +140,7 @@ function App() {
       name: user.name,
       lat: userCoord.lat,
       lng: userCoord.lng,
-      current: true,
+      current: user.current,
     }
 
     setUserWithFriends([currUser, ...friends]);
@@ -146,7 +152,9 @@ function App() {
   */
   React.useEffect(() => {
     
-    loadData()
+    loadData();
+    
+    loadMainUser();
 
     navigator.geolocation.getCurrentPosition(function(position) {
       setUserCoord({
@@ -157,22 +165,21 @@ function App() {
       getPlacesData(position.coords.latitude, position.coords.longitude)
       .then((data) => { 
         setCardPlaces(data.slice(0, 5));
+      });
     });
+  }, []);
 
+  React.useEffect(() => {
     const currUser = {
       name: user.name,
       lat: userCoord.lat,
       lng: userCoord.lng,
-      current: true,
+      current: user.current,
     }
 
-    setUserWithFriends([currUser]);
+    setUserWithFriends([currUser, ...friends]);
 
-    });
-
-    
-
-  }, []);
+  }, [loggedin])
 
   /*
   Function to update food listing with averged lat and lng coordinates
@@ -218,11 +225,11 @@ function App() {
 
   return (
     <div className="App">
-      {(user.email !== "") ? (
+      {(loggedin) ? (
         <Router>
           <div className = "app">
             <NavBar Logout={() => {
-              setUser({name: "", email: ""});
+              setLoggedIn(false)
             }}/>
             <Switch>
               <Route path="/" exact>
